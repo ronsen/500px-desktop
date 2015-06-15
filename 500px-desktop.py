@@ -24,12 +24,15 @@ def get_random_image():
 		
 	return images[randint(0, len(images) - 1)]
 
-def download_image(image, path):
+def download_image(image):
+	path = DOWNLOAD_PATH + image.split('/')[-1] + '.jpg'
+
 	f = urllib2.urlopen(image)
-	
 	data = f.read()
 	with open(path, "wb") as code:
 		code.write(data)
+
+	return path
 
 def set_as_background(path):
 	command = "gsettings set org.gnome.desktop.background picture-uri file://" + path
@@ -39,9 +42,7 @@ def set_as_background(path):
 if __name__ == "__main__":
 	try:
 		image = get_random_image()
-		path = DOWNLOAD_PATH + image.split('/')[-1] + '.jpg'
-		
-		download_image(image, path)
+		path = download_image(image)
 		set_as_background(path)
 	except Exception, e:
 		print e
