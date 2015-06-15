@@ -7,12 +7,16 @@ import commands
 from random import randint
 import sys
 
-URL = 'http://feed.500px.com/500px-best'
+feeds = []
+feeds.append('http://feed.500px.com/500px-best')
+feeds.append('http://feed.500px.com/500px-editors')
+feeds.append('http://feed.500px.com/500px-upcoming')
+feeds.append('http://feed.500px.com/500px-fresh')
 
 DOWNLOAD_PATH = '/home/ronsen/pictures/' # change this
 
 def get_random_image():
-	feed = feedparser.parse(URL)
+	feed = feedparser.parse(feeds[randint(0, len(feeds) - 1)])
 	images = []
 	for entry in feed.entries:
 		content = BeautifulSoup(entry.description)
